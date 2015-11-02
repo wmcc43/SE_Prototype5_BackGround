@@ -25,21 +25,22 @@ public class BackGroundCanvas extends Canvas{
 	int positiony = 0;
 	int mapbit[][] = new int[50][20];
 	Image backimg[] = new Image[5];
+	Image character;
 	KeyListener keylistener;
 	BackGroundCanvas self;
 	Graphics g;
 	JFrame frm;
-	boolean repaintInProgress = false;
+	//boolean repaintInProgress = false;
 	
 	public BackGroundCanvas(JFrame frm){
 		super();
 		this.frm = frm;
 		this.setIgnoreRepaint(true);
 		self = this;
-		initKeyListener();
-		this.addKeyListener(keylistener);
 		LoadImg();
 		initMap(mapType);
+		initKeyListener();
+		this.addKeyListener(keylistener);
 		RepaintActionListener repaint = new RepaintActionListener(this);
 		new Timer(16, repaint).start();
 	}
@@ -51,6 +52,7 @@ public class BackGroundCanvas extends Canvas{
 			backimg[2] = ImageIO.read(new File("./imgs/mapbackgrounds/desert.png"));
 			backimg[3] = ImageIO.read(new File("./imgs/mapbackgrounds/lego.png"));
 			backimg[4] = ImageIO.read(new File("./imgs/mapbackgrounds/rock.png"));
+			character = ImageIO.read(new File("./imgs/character/053.png"));
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -119,9 +121,9 @@ public class BackGroundCanvas extends Canvas{
 	}
 	
 	public void myRepaint(){
-		if(repaintInProgress)
+		/*if(repaintInProgress)
 			return;
-		repaintInProgress = true;
+		repaintInProgress = true;*/
 		BufferStrategy strategy = this.getBufferStrategy();
 		Graphics g = strategy.getDrawGraphics();
 		g.setColor(Color.BLACK);
@@ -131,9 +133,10 @@ public class BackGroundCanvas extends Canvas{
 				g.drawImage(backimg[mapbit[k][l]], i, j, null);
 			}
 		}
+		g.drawImage(character, 200, 100, null);
 		strategy.show();
 		Toolkit.getDefaultToolkit().sync();
-		repaintInProgress = false;
+		//repaintInProgress = false;
 	}
 	
 	private class RepaintActionListener implements ActionListener {
