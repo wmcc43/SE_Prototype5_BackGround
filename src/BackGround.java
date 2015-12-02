@@ -6,6 +6,8 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import se.module.scene.BackGroundCanvas;
+
 public class BackGround extends JFrame implements Runnable{
 	
 	public static void main(String[] args){
