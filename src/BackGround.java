@@ -6,7 +6,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import se.module.scene.BackGroundCanvas;
+import se.module.scene.SceneCanvas;
 
 public class BackGround extends JFrame implements Runnable{
 	
@@ -28,10 +28,10 @@ public class BackGround extends JFrame implements Runnable{
 		});
 		this.setBounds(100, 100, 500, 300);
 		Container cp = this.getContentPane();
-		BackGroundCanvas bg = new BackGroundCanvas(this);
-		cp.add(bg, BorderLayout.CENTER);
+		SceneCanvas sceneCanvas = new SceneCanvas(this);
+		cp.add(sceneCanvas, BorderLayout.CENTER);
 		this.setVisible(true);
-		bg.createBufferStrategy(2);
+		sceneCanvas.createBufferStrategy(2);
 	}
 
 }

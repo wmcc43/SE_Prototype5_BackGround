@@ -14,14 +14,14 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 @SuppressWarnings("serial")
-public class BackGroundCanvas extends Canvas{
+public class SceneCanvas extends Canvas{
 	private int positionx = 0;
 	private int positiony = 0;
 	private KeyListener keylistener;
 	private JFrame frm;
 	private SceneData scenedata;
 	
-	public BackGroundCanvas(JFrame frm){
+	public SceneCanvas(JFrame frm){
 		super();
 		this.frm = frm;
 		scenedata = new SceneData();
@@ -91,8 +91,8 @@ public class BackGroundCanvas extends Canvas{
 	}
 	
 	private class RepaintActionListener implements ActionListener {
-		BackGroundCanvas bg;
-		public RepaintActionListener(BackGroundCanvas bg) {
+		SceneCanvas bg;
+		public RepaintActionListener(SceneCanvas bg) {
 			this.bg = bg;
 		}
 		@Override
