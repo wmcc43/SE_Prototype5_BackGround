@@ -8,30 +8,26 @@ import javax.swing.SwingUtilities;
 
 import se.module.scene.SceneCanvas;
 
-public class BackGround extends JFrame implements Runnable{
+public class BackGround{
 	
 	public static void main(String[] args){
-		Thread t = new Thread(new BackGround());
-		SwingUtilities.invokeLater(t);
-	}
-
-
-	@Override
-	public void run() {
-		this.setUndecorated(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.addWindowListener(new WindowAdapter() {
+		JFrame frm = new JFrame();
+		SceneCanvas sceneCanvas;
+		frm.setUndecorated(true);
+		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
 		});
-		this.setBounds(100, 100, 500, 300);
-		Container cp = this.getContentPane();
-		SceneCanvas sceneCanvas = new SceneCanvas(this);
+		frm.setBounds(100, 100, 500, 300);
+		Container cp = frm.getContentPane();
+		frm.setVisible(true);
+		sceneCanvas = new SceneCanvas(frm);
 		cp.add(sceneCanvas, BorderLayout.CENTER);
-		this.setVisible(true);
-		sceneCanvas.createBufferStrategy(2);
+		Thread t = new Thread(sceneCanvas);
+		SwingUtilities.invokeLater(t);
 	}
 
 }

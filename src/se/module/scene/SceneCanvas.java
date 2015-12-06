@@ -14,12 +14,14 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 @SuppressWarnings("serial")
-public class SceneCanvas extends Canvas{
+public class SceneCanvas extends Canvas implements Runnable{
 	private int positionx = 0;
 	private int positiony = 0;
 	private KeyListener keylistener;
 	private JFrame frm;
 	private SceneData scenedata;
+	private RepaintActionListener repaint;
+	private Timer timer;
 	
 	public SceneCanvas(JFrame frm){
 		super();
@@ -28,8 +30,24 @@ public class SceneCanvas extends Canvas{
 		this.setIgnoreRepaint(true);
 		initKeyListener();
 		this.addKeyListener(keylistener);
-		RepaintActionListener repaint = new RepaintActionListener(this);
-		new Timer(25, repaint).start();
+		repaint = new RepaintActionListener(this);
+		timer = new Timer(25, repaint);
+		timer.start();
+	}
+	
+	@Override
+	public void run() {
+		frm.setVisible(true);
+		this.createBufferStrategy(2);
+	}
+	
+	public void stopPaint(){
+		timer.stop();
+		
+	}
+	
+	public void startPaint(){
+		timer.start();
 	}
 	
 	private void initKeyListener(){
@@ -67,6 +85,12 @@ public class SceneCanvas extends Canvas{
 			break;
 		case(81):
 			frm.dispatchEvent(new WindowEvent(frm, WindowEvent.WINDOW_CLOSING));
+			break;
+		case(65):
+			startPaint();
+			break;
+		case(83):
+			stopPaint();
 			break;
 		default:
 			break;

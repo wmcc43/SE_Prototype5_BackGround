@@ -20,6 +20,14 @@ public class SceneData {
 		LoadImg();
 	}
 	
+	public SceneData(int mapType){
+		mapBit = new int[50][20];
+		backimg = new Image[5];
+		this.mapType = mapType;
+		initMap(mapType);
+		LoadImg();
+	}
+	
 	private void initMap(int mapType){
 		for(int i=0; i<50; i++){
 			for(int j=0; j<20; j++){
