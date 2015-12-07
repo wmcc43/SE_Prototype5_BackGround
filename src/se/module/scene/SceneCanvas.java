@@ -22,11 +22,14 @@ public class SceneCanvas extends Canvas implements Runnable{
 	private SceneData scenedata;
 	private RepaintActionListener repaint;
 	private Timer timer;
+	private Player player;
 	
 	public SceneCanvas(JFrame frm){
 		super();
 		this.frm = frm;
 		scenedata = new SceneData(0);
+		player = scenedata.getPlayer();
+		setRoundBound();
 		this.setIgnoreRepaint(true);
 		initKeyListener();
 		this.addKeyListener(keylistener);
@@ -41,33 +44,91 @@ public class SceneCanvas extends Canvas implements Runnable{
 		this.createBufferStrategy(2);
 	}
 	
+	private void setRoundBound(){
+		scenedata.setTopBound(100);
+		scenedata.setBottomBound(frm.getHeight()-100);
+		scenedata.setLeftBound(100);
+		scenedata.setRightBound(frm.getWidth()-100);
+	}
+	
 	private void initKeyListener(){
 		keylistener = new KeyAdapter(){
 			@Override
 			public void keyPressed(KeyEvent e) {
-				move(e);
+				moveCharacter(e);
+				moveMap(e);
 			}
 		};
 	}
 	
-	private void move(KeyEvent e){
-		
+	private void moveCharacter(KeyEvent e) {
 		switch(e.getKeyCode()){
 		case(37):
-			if(positionx<0)
-				positionx = positionx+25;
+			if(player.getPositionX()>0)
+				player.setPositionX(player.getPositionX()-25);
 			break;
 		case(39):
-			if(positionx>-scenedata.getMapWidth()+frm.getWidth())
-				positionx = positionx-25;
+			if(player.getPositionX()<scenedata.getMapWidth()-100)
+				player.setPositionX(player.getPositionX()+25);
 			break;
 		case(38):
-			if(positiony<0)
-				positiony = positiony+25;
+			if(player.getPositionY()>0)
+				player.setPositionY(player.getPositionY()-25);
 			break;
 		case(40):
-			if(positiony>-scenedata.getMapHeight()+frm.getHeight())
-				positiony = positiony-25;
+			if(player.getPositionY()<scenedata.getMapHeight()-100)
+				player.setPositionY(player.getPositionY()+25);
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void moveMap(KeyEvent e){
+		switch(e.getKeyCode()){
+		case(37):
+			if(positionx>0){
+				if(scenedata.getLeftBound()>player.getPositionX()){
+					positionx = positionx-25;
+					if(scenedata.getLeftBound()>100){
+						scenedata.setLeftBound(scenedata.getLeftBound()-25);
+						scenedata.setRightBound(scenedata.getRightBound()-25);
+					}
+				}
+			}
+			break;
+		case(39):
+			if(positionx<scenedata.getMapWidth()-frm.getWidth()){
+				if(scenedata.getRightBound()<(player.getPositionX()+100)){
+					positionx = positionx+25;
+					if(scenedata.getRightBound()<scenedata.getMapWidth()-100){
+						scenedata.setRightBound(scenedata.getRightBound()+25);
+						scenedata.setLeftBound(scenedata.getLeftBound()+25);;
+					}
+				}
+			}
+			break;
+		case(38):
+			if(positiony>0){
+				if(scenedata.getTopBound()>player.getPositionY()){
+					positiony = positiony-25;
+					if(scenedata.getTopBound()>100){
+						scenedata.setTopBound(scenedata.getTopBound()-25);
+						scenedata.setBottomBound(scenedata.getBottomBound()-25);
+					}
+				}
+			}
+			break;
+		case(40):
+			if(positiony<scenedata.getMapHeight()-frm.getHeight()){
+				if(scenedata.getBottomBound()<(player.getPositionY()+100)){
+					positiony = positiony+25;
+					if(scenedata.getBottomBound()<scenedata.getMapHeight()-100){
+						scenedata.setBottomBound(scenedata.getBottomBound()+25);
+						scenedata.setTopBound(scenedata.getTopBound()+25);;
+					}
+				}
+			}
 			break;
 		case(49):
 		case(50):
@@ -77,18 +138,6 @@ public class SceneCanvas extends Canvas implements Runnable{
 			break;
 		case(81):
 			frm.dispatchEvent(new WindowEvent(frm, WindowEvent.WINDOW_CLOSING));
-			break;
-		case(65):
-			scenedata.getPlayer().setPosition(new Point(100, 0));
-			break;
-		case(66):
-			scenedata.getPlayer().setPosition(new Point(100, 100));
-			break;
-		case(67):
-			scenedata.getPlayer().setPosition(new Point(0, 100));
-			break;
-		case(68):
-			scenedata.getPlayer().setPosition(new Point(0, 200));
 			break;
 		default:
 			break;
@@ -102,8 +151,8 @@ public class SceneCanvas extends Canvas implements Runnable{
 		Graphics g = strategy.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.setClip(0, 0, frm.getWidth(), frm.getHeight());
-		for(int i=0+positionx, k=0; i<scenedata.getMapWidth()+positionx; i+=100, k++){
-			for(int j=0+positiony, l=0; j<scenedata.getMapHeight()+positiony; j+=100, l++){
+		for(int i=0-positionx, k=0; i<scenedata.getMapWidth()-positionx; i+=100, k++){
+			for(int j=0-positiony, l=0; j<scenedata.getMapHeight()-positiony; j+=100, l++){
 				g.drawImage(scenedata.getBackImg(scenedata.getBackimg(k, l)), i, j, null);
 			}
 		}
@@ -111,7 +160,7 @@ public class SceneCanvas extends Canvas implements Runnable{
 		int x, y;
 		x = playerPosition.getX();
 		y = playerPosition.getY();
-		g.drawImage(scenedata.getCharacter(), x+positionx, y+positiony, null);
+		g.drawImage(scenedata.getCharacter(), x-positionx, y-positiony, null);
 		strategy.show();
 		Toolkit.getDefaultToolkit().sync();
 	}

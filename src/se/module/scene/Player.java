@@ -15,6 +15,14 @@ public class Player {
 		position = new Point(x, y);
 	}
 	
+	public void setPositionX(int x){
+		position.setX(x);
+	}
+	
+	public void setPositionY(int y){
+		position.setY(y);
+	}
+	
 	public Point getPostion(){
 		return position;
 	}

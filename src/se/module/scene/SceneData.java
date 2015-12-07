@@ -14,12 +14,16 @@ public class SceneData {
 	private Image backimg[];
 	private Image character;
 	private Player player;
+	private int topBound;
+	private int bottomBound;
+	private int leftBound;
+	private int rightBound;
 	
 	public SceneData(){
 		mapBit = new int[50][20];
 		backimg = new Image[5];
 		player = new Player();
-		player.setPosition(new Point(4900,1900));
+		player.setPosition(new Point(0,0));
 		initMap(mapType);
 		LoadImg();
 	}
@@ -78,11 +82,41 @@ public class SceneData {
 		}
 	}
 	
-	
-	
 	public void setMapType(int type){
 		mapType = type;
 		initMap(mapType);
+	}
+	
+	public void setTopBound(int upperY){
+		this.topBound = upperY;
+	}
+	
+	public void setBottomBound(int bottomY){
+		this.bottomBound = bottomY;
+	}
+	
+	public void setLeftBound(int leftX){
+		this.leftBound = leftX;
+	}
+	
+	public void setRightBound(int rightX){
+		this.rightBound = rightX;
+	}
+	
+	public int getTopBound(){
+		return topBound;
+	}
+	
+	public int getBottomBound(){
+		return bottomBound;
+	}
+	
+	public int getLeftBound(){
+		return leftBound;
+	}
+	
+	public int getRightBound(){
+		return rightBound;
 	}
 	
 	public Image getBackImg(int img){
