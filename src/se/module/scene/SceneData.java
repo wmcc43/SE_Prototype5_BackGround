@@ -21,6 +21,7 @@ public class SceneData {
 	}
 	
 	public SceneData(int mapType){
+		assert (mapType>=0 && mapType<=4) : "mapType >= 0, <=4";
 		mapBit = new int[50][20];
 		backimg = new Image[5];
 		this.mapType = mapType;
@@ -65,6 +66,7 @@ public class SceneData {
 	}
 	
 	public Image getBackImg(int img){
+		assert img>=0 && img<=5 : "img isn't exist";
 		return backimg[img];
 	}
 	

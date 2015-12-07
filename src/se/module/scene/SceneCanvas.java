@@ -26,7 +26,7 @@ public class SceneCanvas extends Canvas implements Runnable{
 	public SceneCanvas(JFrame frm){
 		super();
 		this.frm = frm;
-		scenedata = new SceneData();
+		scenedata = new SceneData(6);
 		this.setIgnoreRepaint(true);
 		initKeyListener();
 		this.addKeyListener(keylistener);
@@ -39,15 +39,6 @@ public class SceneCanvas extends Canvas implements Runnable{
 	public void run() {
 		frm.setVisible(true);
 		this.createBufferStrategy(2);
-	}
-	
-	public void stopPaint(){
-		timer.stop();
-		
-	}
-	
-	public void startPaint(){
-		timer.start();
 	}
 	
 	private void initKeyListener(){
@@ -66,7 +57,7 @@ public class SceneCanvas extends Canvas implements Runnable{
 				positionx = positionx+25;
 			break;
 		case(39):
-			if(positionx>-2000)
+			if(positionx>-2500+frm.getWidth())
 				positionx = positionx-25;
 			break;
 		case(38):
@@ -74,7 +65,7 @@ public class SceneCanvas extends Canvas implements Runnable{
 				positiony = positiony+25;
 			break;
 		case(40):
-			if(positiony>-700)
+			if(positiony>-1000+frm.getHeight())
 				positiony = positiony-25;
 			break;
 		case(49):
@@ -85,12 +76,6 @@ public class SceneCanvas extends Canvas implements Runnable{
 			break;
 		case(81):
 			frm.dispatchEvent(new WindowEvent(frm, WindowEvent.WINDOW_CLOSING));
-			break;
-		case(65):
-			startPaint();
-			break;
-		case(83):
-			stopPaint();
 			break;
 		default:
 			break;
@@ -103,7 +88,7 @@ public class SceneCanvas extends Canvas implements Runnable{
 		BufferStrategy strategy = this.getBufferStrategy();
 		Graphics g = strategy.getDrawGraphics();
 		g.setColor(Color.BLACK);
-		g.setClip(0, 0, 500, 300);
+		g.setClip(0, 0, frm.getWidth(), frm.getHeight());
 		for(int i=-2500+positionx, k=0; i<2500+positionx; i+=100, k++){
 			for(int j=-1000+positiony, l=0; j<1000+positiony; j+=100, l++){
 				g.drawImage(scenedata.getBackImg(scenedata.getBackimg(k, l)), i, j, null);
@@ -112,6 +97,10 @@ public class SceneCanvas extends Canvas implements Runnable{
 		g.drawImage(scenedata.getCharacter(), 200, 100, null);
 		strategy.show();
 		Toolkit.getDefaultToolkit().sync();
+	}
+	
+	public SceneData getSceneData(){
+		return scenedata;
 	}
 	
 	private class RepaintActionListener implements ActionListener {
