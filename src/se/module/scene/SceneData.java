@@ -13,9 +13,13 @@ public class SceneData {
 	private int mapHeight = 2000;
 	private Image backimg[];
 	private Image character;
+	private Player player;
+	
 	public SceneData(){
 		mapBit = new int[50][20];
 		backimg = new Image[5];
+		player = new Player();
+		player.setPosition(new Point(4900,1900));
 		initMap(mapType);
 		LoadImg();
 	}
@@ -24,9 +28,19 @@ public class SceneData {
 		assert (mapType>=0 && mapType<=4) : "mapType >= 0, <=4";
 		mapBit = new int[50][20];
 		backimg = new Image[5];
+		player = new Player();
+		player.setPosition(new Point(0,0));
 		this.mapType = mapType;
 		initMap(mapType);
 		LoadImg();
+	}
+	
+	public void setPlayer(Player player){
+		this.player = player;
+	}
+	
+	public Player getPlayer(){
+		return player;
 	}
 	
 	private void initMap(int mapType){
@@ -47,6 +61,10 @@ public class SceneData {
 		}
 	}
 	
+	public Point getVirtualCharacterPosition(){
+		return player.getPostion();
+	}
+	
 	private void LoadImg(){
 		try{
 			backimg[0] = ImageIO.read(new File("./imgs/mapbackgrounds/ice.png"));
@@ -59,6 +77,8 @@ public class SceneData {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	public void setMapType(int type){
 		mapType = type;

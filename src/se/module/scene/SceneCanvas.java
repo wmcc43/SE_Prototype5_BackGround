@@ -26,7 +26,7 @@ public class SceneCanvas extends Canvas implements Runnable{
 	public SceneCanvas(JFrame frm){
 		super();
 		this.frm = frm;
-		scenedata = new SceneData(6);
+		scenedata = new SceneData(0);
 		this.setIgnoreRepaint(true);
 		initKeyListener();
 		this.addKeyListener(keylistener);
@@ -51,21 +51,22 @@ public class SceneCanvas extends Canvas implements Runnable{
 	}
 	
 	private void move(KeyEvent e){
+		
 		switch(e.getKeyCode()){
 		case(37):
-			if(positionx<2500)
+			if(positionx<0)
 				positionx = positionx+25;
 			break;
 		case(39):
-			if(positionx>-2500+frm.getWidth())
+			if(positionx>-scenedata.getMapWidth()+frm.getWidth())
 				positionx = positionx-25;
 			break;
 		case(38):
-			if(positiony<1000)
+			if(positiony<0)
 				positiony = positiony+25;
 			break;
 		case(40):
-			if(positiony>-1000+frm.getHeight())
+			if(positiony>-scenedata.getMapHeight()+frm.getHeight())
 				positiony = positiony-25;
 			break;
 		case(49):
@@ -77,10 +78,22 @@ public class SceneCanvas extends Canvas implements Runnable{
 		case(81):
 			frm.dispatchEvent(new WindowEvent(frm, WindowEvent.WINDOW_CLOSING));
 			break;
+		case(65):
+			scenedata.getPlayer().setPosition(new Point(100, 0));
+			break;
+		case(66):
+			scenedata.getPlayer().setPosition(new Point(100, 100));
+			break;
+		case(67):
+			scenedata.getPlayer().setPosition(new Point(0, 100));
+			break;
+		case(68):
+			scenedata.getPlayer().setPosition(new Point(0, 200));
+			break;
 		default:
 			break;
 		}
-		//System.out.println(e.getKeyCode());
+		System.out.println(e.getKeyCode()+"X:"+positionx+"Y:"+positiony);
 		repaint();
 	}
 	
@@ -89,12 +102,16 @@ public class SceneCanvas extends Canvas implements Runnable{
 		Graphics g = strategy.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.setClip(0, 0, frm.getWidth(), frm.getHeight());
-		for(int i=-2500+positionx, k=0; i<2500+positionx; i+=100, k++){
-			for(int j=-1000+positiony, l=0; j<1000+positiony; j+=100, l++){
+		for(int i=0+positionx, k=0; i<scenedata.getMapWidth()+positionx; i+=100, k++){
+			for(int j=0+positiony, l=0; j<scenedata.getMapHeight()+positiony; j+=100, l++){
 				g.drawImage(scenedata.getBackImg(scenedata.getBackimg(k, l)), i, j, null);
 			}
 		}
-		g.drawImage(scenedata.getCharacter(), 200, 100, null);
+		Point playerPosition = scenedata.getVirtualCharacterPosition();
+		int x, y;
+		x = playerPosition.getX();
+		y = playerPosition.getY();
+		g.drawImage(scenedata.getCharacter(), x+positionx, y+positiony, null);
 		strategy.show();
 		Toolkit.getDefaultToolkit().sync();
 	}
