@@ -21,7 +21,7 @@ public class BackGround{
 				System.exit(0);
 			}
 		});
-		frm.setBounds(100, 100, 1200, 800);
+		frm.setBounds(100, 100, 1000, 600);
 		Container cp = frm.getContentPane();
 		frm.setVisible(true);
 		sceneCanvas = new SceneCanvas(frm);
