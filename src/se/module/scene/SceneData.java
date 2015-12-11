@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
 public class SceneData {
 	private int mapBit[][];
@@ -18,33 +19,51 @@ public class SceneData {
 	private int bottomBound;
 	private int leftBound;
 	private int rightBound;
+	private int positionx = 0;
+	private int positiony = 0;
+	private JFrame frm;
 	
-	public SceneData(){
+	public SceneData(JFrame frm){
 		mapBit = new int[50][20];
 		backimg = new Image[5];
 		player = new Player();
 		player.setPosition(new Point(0,0));
+		this.frm = frm;
+		setRoundBound();
 		initMap(mapType);
 		LoadImg();
 	}
 	
-	public SceneData(int mapType){
-		assert (mapType>=0 && mapType<=4) : "mapType >= 0, <=4";
+	public SceneData(int mapType, JFrame frm){
 		mapBit = new int[50][20];
 		backimg = new Image[5];
 		player = new Player();
 		player.setPosition(new Point(0,0));
+		this.frm = frm;
+		setRoundBound();
 		this.mapType = mapType;
 		initMap(mapType);
 		LoadImg();
 	}
 	
-	public void setPlayer(Player player){
-		this.player = player;
+	private void LoadImg(){
+		try{
+			backimg[0] = ImageIO.read(new File("./imgs/mapbackgrounds/ice.png"));
+			backimg[1] = ImageIO.read(new File("./imgs/mapbackgrounds/cake.png"));
+			backimg[2] = ImageIO.read(new File("./imgs/mapbackgrounds/desert.png"));
+			backimg[3] = ImageIO.read(new File("./imgs/mapbackgrounds/lego.png"));
+			backimg[4] = ImageIO.read(new File("./imgs/mapbackgrounds/rock.png"));
+			character = ImageIO.read(new File("./imgs/character/053.png"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 	
-	public Player getPlayer(){
-		return player;
+	private void setRoundBound(){
+		setTopBound(100);
+		setBottomBound(frm.getHeight()-100);
+		setLeftBound(100);
+		setRightBound(frm.getWidth()-100);
 	}
 	
 	private void initMap(int mapType){
@@ -69,17 +88,12 @@ public class SceneData {
 		return player.getPostion();
 	}
 	
-	private void LoadImg(){
-		try{
-			backimg[0] = ImageIO.read(new File("./imgs/mapbackgrounds/ice.png"));
-			backimg[1] = ImageIO.read(new File("./imgs/mapbackgrounds/cake.png"));
-			backimg[2] = ImageIO.read(new File("./imgs/mapbackgrounds/desert.png"));
-			backimg[3] = ImageIO.read(new File("./imgs/mapbackgrounds/lego.png"));
-			backimg[4] = ImageIO.read(new File("./imgs/mapbackgrounds/rock.png"));
-			character = ImageIO.read(new File("./imgs/character/053.png"));
-		}catch(IOException e){
-			e.printStackTrace();
-		}
+	public void setPlayer(Player player){
+		this.player = player;
+	}
+	
+	public Player getPlayer(){
+		return player;
 	}
 	
 	public void setMapType(int type){
@@ -91,28 +105,28 @@ public class SceneData {
 		this.topBound = upperY;
 	}
 	
-	public void setBottomBound(int bottomY){
-		this.bottomBound = bottomY;
-	}
-	
-	public void setLeftBound(int leftX){
-		this.leftBound = leftX;
-	}
-	
-	public void setRightBound(int rightX){
-		this.rightBound = rightX;
-	}
-	
 	public int getTopBound(){
 		return topBound;
+	}
+
+	public void setBottomBound(int bottomY){
+		this.bottomBound = bottomY;
 	}
 	
 	public int getBottomBound(){
 		return bottomBound;
 	}
+
+	public void setLeftBound(int leftX){
+		this.leftBound = leftX;
+	}
 	
 	public int getLeftBound(){
 		return leftBound;
+	}
+
+	public void setRightBound(int rightX){
+		this.rightBound = rightX;
 	}
 	
 	public int getRightBound(){
@@ -138,5 +152,33 @@ public class SceneData {
 	
 	public int getBackimg(int x, int y){
 		return mapBit[x][y];
+	}
+	
+	public void setPositionX(int x){
+		this.positionx = x;
+	}
+	
+	public int getPositionX(){
+		return positionx;
+	}
+	
+	public void setPositionY(int y){
+		this.positiony = y;
+	}
+	
+	public int getPositionY(){
+		return positiony;
+	}
+	
+	public int getFrameWidth(){
+		return frm.getWidth();
+	}
+	
+	public JFrame getJFrame(){
+		return frm;
+	}
+
+	public int getFrameHeight(){
+		return frm.getHeight();
 	}
 }
