@@ -6,16 +6,15 @@ import java.awt.Toolkit;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
 public class SceneCanvas extends Canvas implements Runnable{
 	private KeyListener keylistener;
-	private JFrame frm;
 	private SceneData scenedata;
 	
-	public SceneCanvas(JFrame frm){
+	public SceneCanvas(){
 		super();
-		this.frm = frm;
 		this.setIgnoreRepaint(true);
 		this.addKeyListener(keylistener);
 	}
@@ -24,7 +23,7 @@ public class SceneCanvas extends Canvas implements Runnable{
 		BufferStrategy strategy = this.getBufferStrategy();
 		Graphics g = strategy.getDrawGraphics();
 		g.setColor(Color.BLACK);
-		g.setClip(0, 0, frm.getWidth(), frm.getHeight());
+		g.setClip(0, 0, scenedata.getFrameWidth(), scenedata.getFrameHeight());
 		for(int i=0-scenedata.getPositionX(), k=0; i<scenedata.getMapWidth()-scenedata.getPositionX(); i+=100, k++){
 			for(int j=0-scenedata.getPositionY(), l=0; j<scenedata.getMapHeight()-scenedata.getPositionY(); j+=100, l++){
 				g.drawImage(scenedata.getBackImg(scenedata.getBackimg(k, l)), i, j, null);
@@ -45,6 +44,7 @@ public class SceneCanvas extends Canvas implements Runnable{
 	
 	@Override
 	public void run() {
+		JFrame frm = (JFrame)SwingUtilities.getAncestorOfClass(JFrame.class, this);
 		frm.setVisible(true);
 		this.createBufferStrategy(2);
 	}

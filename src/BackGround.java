@@ -28,7 +28,7 @@ public class BackGround{
 		frm.setBounds(100, 100, 1000, 600);
 		Container cp = frm.getContentPane();
 		frm.setVisible(true);
-		sceneCanvas = new SceneCanvas(frm);
+		sceneCanvas = new SceneCanvas();
 		SceneData scenedata = new SceneData(frm);
 		sceneCanvas.setSceneData(scenedata);
 		sceneCanvas.addKeyListener(new CharacterMoveListener(scenedata));

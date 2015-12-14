@@ -1,7 +1,9 @@
 package se.module.scene;
 
 import java.awt.Image;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -22,6 +24,7 @@ public class SceneData {
 	private int positionx = 0;
 	private int positiony = 0;
 	private JFrame frm;
+	private String mapFilePath[] = {"./mapFileIce","./mapFileCake","./mapFileDesert","./mapFileLego"};
 	
 	public SceneData(JFrame frm){
 		mapBit = new int[50][20];
@@ -30,7 +33,7 @@ public class SceneData {
 		player.setPosition(new Point(0,0));
 		this.frm = frm;
 		setRoundBound();
-		initMap(mapType);
+		LoadMap(mapFilePath[mapType]);
 		LoadImg();
 	}
 	
@@ -41,8 +44,7 @@ public class SceneData {
 		player.setPosition(new Point(0,0));
 		this.frm = frm;
 		setRoundBound();
-		this.mapType = mapType;
-		initMap(mapType);
+		LoadMap(mapFilePath[mapType]);
 		LoadImg();
 	}
 	
@@ -66,21 +68,25 @@ public class SceneData {
 		setRightBound(frm.getWidth()-100);
 	}
 	
-	private void initMap(int mapType){
-		for(int i=0; i<50; i++){
-			for(int j=0; j<20; j++){
-				if(i%2==1){
-					if(j%2==1){
-						mapBit[i][j] = 4;
-					}
-					else{
-						mapBit[i][j] = mapType;
-					}
-				}
+	private void LoadMap(String mapFilePath){
+		FileReader input;
+		BufferedReader reader;
+		String temp;
+		try {
+			input = new FileReader(mapFilePath);
+			reader = new BufferedReader(input);
+			for(int j=0;j<20;j++){
+				temp = reader.readLine();
+				if(temp==null)
+					break;
 				else{
-					mapBit[i][j] = mapType;
+					for(int i=0;i<50;i++){
+						mapBit[i][j] = Character.getNumericValue(temp.charAt(i));
+					}
 				}
 			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 	}
 	
@@ -96,9 +102,8 @@ public class SceneData {
 		return player;
 	}
 	
-	public void setMapType(int type){
-		mapType = type;
-		initMap(mapType);
+	public void setMapType(int mapType){
+		LoadMap(mapFilePath[mapType]);
 	}
 	
 	public void setTopBound(int upperY){
