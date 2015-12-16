@@ -16,6 +16,7 @@ public class SceneCanvasTest {
 	SceneData scenedata;
 	Thread t;
 	@BeforeClass
+	/*scenedata mock, viewport testing*/
 	public static void setUpBeforeClass() throws Exception {
 		frm = new JFrame();
 		frm.setUndecorated(true);

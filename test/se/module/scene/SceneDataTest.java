@@ -12,7 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SceneDataTest {
-	
+	/*defensive programing of read in map*/
 	static JFrame frm;
 	SceneData scenedata;
 	
