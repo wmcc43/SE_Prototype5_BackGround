@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -16,7 +16,7 @@ import org.junit.Test;
 public class SceneDataTest {
 	
 	static JFrame frm;
-	static SceneData scenedata;
+	SceneData scenedata;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -42,20 +42,28 @@ public class SceneDataTest {
 		scenedata = new SceneData(0, frm);
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
 	public final void testSceneDataJFrame() {
-		
+		SceneData scene = new SceneData(frm);
+		assertNotNull(scene.getJFrame());
 	}
 
 	@Test
 	public final void testSceneDataIntJFrame() {
-		fail("Not yet implemented"); // TODO
+		int mapType = 2;
+		SceneData scene = new SceneData(mapType, frm);
+		assert(mapType>=0 && mapType<5);
+		assertNotNull(scene.getJFrame());
 	}
 
+	@Test (expected = IOException.class)
+	public final void testLoadMap(){
+		String mapPath[] = {"./mapFileCake","./mapFileDesert","./mapFileIce","./mapFileLego"};
+		for(int i=0;i<4;i++){
+			scenedata.LoadMap(mapPath[i]);
+		}
+	}
+	
 	@Test
 	public final void testGetVirtualCharacterPosition() {
 		Player player = scenedata.getPlayer();
@@ -82,107 +90,140 @@ public class SceneDataTest {
 
 	@Test
 	public final void testSetMapType() {
-		fail("Not yet implemented"); // TODO
+		int mapType = 2;
+		assert mapType>=0 && mapType<5;
+		scenedata.setMapType(mapType);
 	}
 
 	@Test
 	public final void testSetTopBound() {
-		fail("Not yet implemented"); // TODO
+		int topBound = 100;
+		scenedata.setTopBound(topBound);
+		assertEquals(topBound, scenedata.getTopBound());
 	}
 
 	@Test
 	public final void testGetTopBound() {
-		fail("Not yet implemented"); // TODO
+		int topBound = 100;
+		scenedata.setTopBound(topBound);
+		assertEquals(topBound, scenedata.getTopBound());
 	}
 
 	@Test
 	public final void testSetBottomBound() {
-		fail("Not yet implemented"); // TODO
+		int btmBound = 100;
+		scenedata.setBottomBound(btmBound);
+		assertEquals(btmBound, scenedata.getBottomBound());
 	}
 
 	@Test
 	public final void testGetBottomBound() {
-		fail("Not yet implemented"); // TODO
+		int btmBound = 100;
+		scenedata.setBottomBound(btmBound);
+		assertEquals(btmBound, scenedata.getBottomBound());
 	}
 
 	@Test
 	public final void testSetLeftBound() {
-		fail("Not yet implemented"); // TODO
+		int leftBound = 100;
+		scenedata.setLeftBound(leftBound);
+		assertEquals(leftBound, scenedata.getLeftBound());
 	}
 
 	@Test
 	public final void testGetLeftBound() {
-		fail("Not yet implemented"); // TODO
+		int leftBound = 100;
+		scenedata.setLeftBound(leftBound);
+		assertEquals(leftBound, scenedata.getLeftBound());
 	}
 
 	@Test
 	public final void testSetRightBound() {
-		fail("Not yet implemented"); // TODO
+		int rightBound = 100;
+		scenedata.setRightBound(rightBound);
+		assertEquals(rightBound, scenedata.getRightBound());
 	}
 
 	@Test
 	public final void testGetRightBound() {
-		fail("Not yet implemented"); // TODO
+		int rightBound = 100;
+		scenedata.setRightBound(rightBound);
+		assertEquals(rightBound, scenedata.getRightBound());
 	}
 
 	@Test
 	public final void testGetBackImg() {
-		fail("Not yet implemented"); // TODO
+		for(int i=0;i<5;i++)
+			assertNotNull(scenedata.getBackImg(i));
 	}
 
 	@Test
 	public final void testGetMapWidth() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(5000, scenedata.getMapWidth());
 	}
 
 	@Test
 	public final void testGetMapHeight() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(2000, scenedata.getMapHeight());
 	}
 
 	@Test
 	public final void testGetCharacter() {
-		fail("Not yet implemented"); // TODO
+		assertNotNull(scenedata.getCharacter());
 	}
 
 	@Test
 	public final void testGetBackimg() {
-		fail("Not yet implemented"); // TODO
+		for(int i=0;i<5;i++){
+			assertNotNull(scenedata.getBackImg(i));
+		}
+		for(int i=0;i<50;i++)
+			for(int j=0;j<20;j++){
+				assert scenedata.getBackimg(i, j)>=0 && scenedata.getBackimg(i, j)<5;
+			}
 	}
 
 	@Test
 	public final void testSetPositionX() {
-		fail("Not yet implemented"); // TODO
+		int Xoffset = 1000;
+		scenedata.setPositionX(Xoffset);
+		assertEquals(Xoffset, scenedata.getPositionX());
 	}
 
 	@Test
 	public final void testGetPositionX() {
-		fail("Not yet implemented"); // TODO
+		int Xoffset = 1000;
+		scenedata.setPositionX(Xoffset);
+		assertEquals(Xoffset, scenedata.getPositionX());
 	}
 
 	@Test
 	public final void testSetPositionY() {
-		fail("Not yet implemented"); // TODO
+		int Yoffset = 1000;
+		scenedata.setPositionY(Yoffset);
+		assertEquals(Yoffset, scenedata.getPositionY());
 	}
 
 	@Test
 	public final void testGetPositionY() {
-		fail("Not yet implemented"); // TODO
+		int Yoffset = 1000;
+		scenedata.setPositionY(Yoffset);
+		assertEquals(Yoffset, scenedata.getPositionY());
 	}
 
 	@Test
 	public final void testGetFrameWidth() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(scenedata.getFrameWidth(), frm.getWidth());
 	}
 
 	@Test
 	public final void testGetJFrame() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(scenedata.getJFrame(), frm);
 	}
 
 	@Test
 	public final void testGetFrameHeight() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(scenedata.getFrameHeight(), frm.getHeight());
 	}
 
 }

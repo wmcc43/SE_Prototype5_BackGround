@@ -3,6 +3,7 @@ package se.module.scene;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -68,7 +69,7 @@ public class SceneData {
 		setRightBound(frm.getWidth()-100);
 	}
 	
-	private void LoadMap(String mapFilePath){
+	public void LoadMap(String mapFilePath){
 		FileReader input;
 		BufferedReader reader;
 		String temp;
@@ -85,8 +86,10 @@ public class SceneData {
 					}
 				}
 			}
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
