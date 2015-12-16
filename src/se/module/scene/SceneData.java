@@ -31,7 +31,7 @@ public class SceneData {
 		mapBit = new int[50][20];
 		backimg = new Image[5];
 		player = new Player();
-		player.setPosition(new Point(0,0));
+		player.setPosition(new Point(500,300));
 		this.frm = frm;
 		setRoundBound();
 		LoadMap(mapFilePath[mapType]);
@@ -87,14 +87,43 @@ public class SceneData {
 				}
 			}
 		} catch (FileNotFoundException e) {
+			System.out.println("File not exist in "+mapFilePath+" please check the file. Would set to basic map");
 			e.printStackTrace();
+			setBasicMap();
 		} catch (IOException e) {
+			System.out.println("please check mapFile is correct structure, it should be (50-column*20-raw) Strings with number0~4. Would set to basic map");
 			e.printStackTrace();
+			setBasicMap();
+		} catch(IndexOutOfBoundsException e) {
+			System.out.println("please check mapFile is correct structure, it should be (50-column*20-raw) Strings with number0~4. Would set to basic map");
+			e.printStackTrace();
+			setBasicMap();
 		}
+	}
+	
+	private void setBasicMap(){
+		for(int i=0;i<50;i++)
+			for(int j=0;j<20;j++){
+				if(i%2==1 && j%2==1)
+					mapBit[i][j]=4;
+				else
+					mapBit[i][j]=3;
+			}
 	}
 	
 	public Point getVirtualCharacterPosition(){
 		return player.getPostion();
+	}
+	
+	public void setVirtualCharacterPosition(Point point){
+		assert point.getX()<=mapWidth-100 && point.getY()<=mapHeight-100;
+		player.setPosition(point);
+		this.setPositionX(player.getPositionX()-500);
+		this.setPositionY(player.getPositionY()-300);
+		this.setTopBound(player.getPositionY()-200);
+		this.setBottomBound(player.getPositionY()+200);
+		this.setLeftBound(player.getPositionX()-400);
+		this.setLeftBound(player.getPositionX()+400);
 	}
 	
 	public void setPlayer(Player player){
@@ -106,6 +135,7 @@ public class SceneData {
 	}
 	
 	public void setMapType(int mapType){
+		assert mapType>=0 && mapType<4 : "mapType error";
 		LoadMap(mapFilePath[mapType]);
 	}
 	
@@ -182,11 +212,11 @@ public class SceneData {
 		return frm.getWidth();
 	}
 	
-	public JFrame getJFrame(){
-		return frm;
-	}
-
 	public int getFrameHeight(){
 		return frm.getHeight();
+	}
+
+	public JFrame getJFrame(){
+		return frm;
 	}
 }

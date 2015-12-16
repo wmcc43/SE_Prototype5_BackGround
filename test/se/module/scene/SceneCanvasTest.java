@@ -1,44 +1,22 @@
 package se.module.scene;
 
 import static org.junit.Assert.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
+
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SceneCanvasTest {
-	static JFrame frm;
 	SceneCanvas scenecanvas;
-	SceneData scenedata;
-	Thread t;
-	@BeforeClass
-	/*scenedata mock, viewport testing*/
-	public static void setUpBeforeClass() throws Exception {
-		frm = new JFrame();
-		frm.setUndecorated(true);
-		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frm.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-		frm.setBounds(100, 100, 1000, 600);
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		frm.dispose();
-	}
-
+	SceneDataStub scenedata;
+	
+	/*scenedata stub, viewport testing*/
+	
 	@Before
 	public void setUp() throws Exception {
+		scenedata = new SceneDataStub();
 		scenecanvas = new SceneCanvas();
-		scenedata = new SceneData(1, frm);
+		scenecanvas.setSceneData(scenedata);
 	}
 
 	@After
@@ -47,22 +25,37 @@ public class SceneCanvasTest {
 
 	@Test
 	public void testMyRepaint() {
-		scenecanvas.setSceneData(scenedata);
-		scenecanvas.addKeyListener(new CharacterMoveListener(scenedata));
-		assertNotNull(scenecanvas.getSceneData());
-		assertNotNull(scenecanvas.getKeyListeners());
+		Player player = new Player();
+		scenedata.setPlayer(player);
+		
+		scenedata.setVirtualCharacterPosition(new Point(2500, 1000));
+		assertEquals(2000, scenedata.getPositionX());
+		assertEquals(3000, scenedata.getPositionX()+scenedata.getFrameWidth());
+		assertEquals(700, scenedata.getPositionY());
+		assertEquals(1300, scenedata.getPositionY()+scenedata.getFrameHeight());
+		
+		scenedata.setVirtualCharacterPosition(new Point(4900, 1900));
+		assertEquals(4000, scenedata.getPositionX());
+		assertEquals(5000, scenedata.getPositionX()+scenedata.getFrameWidth());
+		assertEquals(1400, scenedata.getPositionY());
+		assertEquals(2000, scenedata.getPositionY()+scenedata.getFrameHeight());
+		
+		scenedata.setVirtualCharacterPosition(new Point(4900, 0));
+		assertEquals(4000, scenedata.getPositionX());
+		assertEquals(5000, scenedata.getPositionX()+scenedata.getFrameWidth());
+		assertEquals(0, scenedata.getPositionY());
+		assertEquals(600, scenedata.getPositionY()+scenedata.getFrameHeight());
+		
+		scenedata.setVirtualCharacterPosition(new Point(0, 1900));
+		assertEquals(0, scenedata.getPositionX());
+		assertEquals(1000, scenedata.getPositionX()+scenedata.getFrameWidth());
+		assertEquals(1400, scenedata.getPositionY());
+		assertEquals(2000, scenedata.getPositionY()+scenedata.getFrameHeight());
+		
+		scenedata.setVirtualCharacterPosition(new Point(0, 0));
+		assertEquals(0, scenedata.getPositionX());
+		assertEquals(1000, scenedata.getPositionX()+scenedata.getFrameWidth());
+		assertEquals(0, scenedata.getPositionY());
+		assertEquals(600, scenedata.getPositionY()+scenedata.getFrameHeight());
 	}
-
-	@Test
-	public void testSetSceneData() {
-		scenecanvas.setSceneData(scenedata);
-		assertNotNull(scenecanvas.getSceneData());
-	}
-
-	@Test
-	public void testGetSceneData() {
-		scenecanvas.setSceneData(scenedata);
-		assertNotNull(scenecanvas.getSceneData());
-	}
-
 }

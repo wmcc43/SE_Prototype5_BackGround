@@ -111,7 +111,7 @@ public class SceneDataTest {
 				assertEquals(mapbit[i][j], scenedata.getBackimg(j, i));
 			}
 	}
-
+	
 	@Test
 	public final void testSetTopBound() {
 		int topBound = 100;
