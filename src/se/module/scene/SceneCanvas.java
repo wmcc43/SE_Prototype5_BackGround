@@ -3,20 +3,17 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
 public class SceneCanvas extends Canvas implements Runnable{
-	private KeyListener keylistener;
 	private SceneData scenedata;
 	
 	public SceneCanvas(){
 		super();
 		this.setIgnoreRepaint(true);
-		this.addKeyListener(keylistener);
 	}
 	
 	public synchronized void myRepaint(){
