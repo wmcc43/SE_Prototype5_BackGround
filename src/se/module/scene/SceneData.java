@@ -69,7 +69,7 @@ public class SceneData {
 		setRightBound(frm.getWidth()-100);
 	}
 	
-	public void LoadMap(String mapFilePath){
+	private void LoadMap(String mapFilePath){
 		FileReader input;
 		BufferedReader reader;
 		String temp;

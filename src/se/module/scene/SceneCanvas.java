@@ -35,6 +35,10 @@ public class SceneCanvas extends Canvas implements Runnable{
 		Toolkit.getDefaultToolkit().sync();
 	}
 	
+	public void setSceneData(SceneData scenedata){
+		this.scenedata = scenedata;
+	}
+
 	public SceneData getSceneData(){
 		return scenedata;
 	}
@@ -44,9 +48,5 @@ public class SceneCanvas extends Canvas implements Runnable{
 		JFrame frm = (JFrame)SwingUtilities.getAncestorOfClass(JFrame.class, this);
 		frm.setVisible(true);
 		this.createBufferStrategy(2);
-	}
-	
-	public void setSceneData(SceneData scenedata){
-		this.scenedata = scenedata;
 	}
 }
