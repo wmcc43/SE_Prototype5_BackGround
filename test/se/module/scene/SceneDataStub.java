@@ -1,6 +1,5 @@
 package se.module.scene;
 
-import javax.swing.JFrame;
 
 public class SceneDataStub extends SceneData {
 	
@@ -9,30 +8,29 @@ public class SceneDataStub extends SceneData {
 	private Player player;
 	private int positionx = 0;//offsetX
 	private int positiony = 0;//offsetY
-	private int frameWidth = 1000;
-	private int frameHeight = 600;
-	
-	public SceneDataStub() {
-		super(new JFrame());
+	private ScenePanel panel;
+	public SceneDataStub(ScenePanel panel) {
+		super(panel);
+		this.panel = panel;
 	}
 	
 	public void setVirtualCharacterPosition(Point point){
 		assert point.getX()<=mapWidth-100 && point.getY()<=mapHeight-100;
 		player.setPosition(point);
 		
-		if(player.getPositionX()>500 && player.getPositionX()<4500)
-			this.setPositionX(player.getPositionX()-500);
-		else if(player.getPositionX()<=500)
+		if(player.getPositionX()>getPanelWidth()/2 && player.getPositionX()<mapWidth-getPanelWidth()/2)
+			this.setPositionX(player.getPositionX()-getPanelWidth()/2);
+		else if(player.getPositionX()<=getPanelWidth()/2)
 			this.setPositionX(0);
 		else
-			this.setPositionX(4000);
+			this.setPositionX(mapWidth-getPanelWidth());
 		
-		if(player.getPositionY()>300 && player.getPositionY()<1700)
-			this.setPositionY(player.getPositionY()-300);
-		else if(player.getPositionY()<=300)
+		if(player.getPositionY()>getPanelHeight()/2 && player.getPositionY()<mapHeight-getPanelHeight()/2)
+			this.setPositionY(player.getPositionY()-getPanelHeight()/2);
+		else if(player.getPositionY()<=getPanelHeight()/2)
 			this.setPositionY(0);
 		else
-			this.setPositionY(1400);
+			this.setPositionY(mapHeight-getPanelHeight());
 	}
 	
 	@Override
@@ -61,12 +59,12 @@ public class SceneDataStub extends SceneData {
 	}
 	
 	@Override
-	public int getFrameWidth(){
-		return frameWidth;
+	public int getPanelWidth(){
+		return panel.getWidth();
 	}
 	
 	@Override
-	public int getFrameHeight(){
-		return frameHeight;
+	public int getPanelHeight(){
+		return panel.getHeight();
 	}
 }

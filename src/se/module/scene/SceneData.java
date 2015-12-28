@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 
 public class SceneData {
 	private int mapBit[][];
@@ -24,26 +23,26 @@ public class SceneData {
 	private int rightBound;
 	private int positionx = 0;
 	private int positiony = 0;
-	private JFrame frm;
+	private ScenePanel panel;
 	private String mapFilePath[] = {"./mapFileIce","./mapFileCake","./mapFileDesert","./mapFileLego"};
 	
-	public SceneData(JFrame frm){
+	public SceneData(ScenePanel panel){
 		mapBit = new int[50][20];
 		backimg = new Image[5];
 		player = new Player();
 		player.setPosition(new Point(500,300));
-		this.frm = frm;
+		this.panel = panel;
 		setRoundBound();
 		LoadMap(mapFilePath[mapType]);
 		LoadImg();
 	}
 	
-	public SceneData(int mapType, JFrame frm){
+	public SceneData(int mapType, ScenePanel panel){
 		mapBit = new int[50][20];
 		backimg = new Image[5];
 		player = new Player();
 		player.setPosition(new Point(0,0));
-		this.frm = frm;
+		this.panel = panel;
 		setRoundBound();
 		LoadMap(mapFilePath[mapType]);
 		LoadImg();
@@ -64,9 +63,9 @@ public class SceneData {
 	
 	private void setRoundBound(){
 		setTopBound(100);
-		setBottomBound(frm.getHeight()-100);
+		setBottomBound(panel.getHeight()-100);
 		setLeftBound(100);
-		setRightBound(frm.getWidth()-100);
+		setRightBound(panel.getWidth()-100);
 	}
 	
 	private void LoadMap(String mapFilePath){
@@ -208,15 +207,15 @@ public class SceneData {
 		return positiony;
 	}
 	
-	public int getFrameWidth(){
-		return frm.getWidth();
+	public int getPanelWidth(){
+		return panel.getWidth();
 	}
 	
-	public int getFrameHeight(){
-		return frm.getHeight();
+	public int getPanelHeight(){
+		return panel.getHeight();
 	}
 
-	public JFrame getJFrame(){
-		return frm;
+	public ScenePanel getScenePanel(){
+		return panel;
 	}
 }

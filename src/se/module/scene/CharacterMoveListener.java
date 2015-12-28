@@ -4,6 +4,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 public class CharacterMoveListener extends KeyAdapter {
 	private SceneData scenedata;
 	public boolean right=false, left=false, up=false, down=false, space=false;
@@ -39,19 +42,14 @@ public class CharacterMoveListener extends KeyAdapter {
 			scenedata.setMapType(e.getKeyCode()-49);
 			break;
 		case(KeyEvent.VK_Q):
-			scenedata.getJFrame().dispatchEvent(new WindowEvent(scenedata.getJFrame(), WindowEvent.WINDOW_CLOSING));
+			JFrame frm = (JFrame)SwingUtilities.getAncestorOfClass(JFrame.class, scenedata.getScenePanel());
+			frm.dispatchEvent(new WindowEvent(frm, WindowEvent.WINDOW_CLOSING));
 			break;
 		default:
 			break;
 		}
 	}
 	
-	/*
-	public void keyPressed(KeyEvent e) {
-		moveCharacter(e);
-		moveMap(e);
-	}
-	*/
 	@Override
 	public void keyReleased(KeyEvent e) {
 		super.keyReleased(e);

@@ -2,10 +2,6 @@ package se.module.scene;
 
 import static org.junit.Assert.*;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -13,45 +9,37 @@ import org.junit.Test;
 
 public class SceneDataTest {
 	/*defensive programing of read in map*/
-	static JFrame frm;
+	static ScenePanel panel;
 	SceneData scenedata;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		frm = new JFrame();
-		frm.setUndecorated(true);
-		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frm.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-		frm.setBounds(100, 100, 1000, 600);
+		panel = new ScenePanel();
+		panel.setBounds(0, 0, 800, 600);
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		frm.dispose();
+		
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		scenedata = new SceneData(0, frm);
+		scenedata = new SceneData(0, panel);
 	}
 
 	@Test
 	public final void testSceneDataJFrame() {
-		SceneData scene = new SceneData(frm);
-		assertNotNull(scene.getJFrame());
+		SceneData scene = new SceneData(panel);
+		assertNotNull(scene.getScenePanel());
 	}
 
 	@Test
 	public final void testSceneDataIntJFrame() {
 		int mapType = 2;
-		SceneData scene = new SceneData(mapType, frm);
+		SceneData scene = new SceneData(mapType, panel);
 		assert(mapType>=0 && mapType<5);
-		assertNotNull(scene.getJFrame());
+		assertNotNull(scene.getScenePanel());
 	}
 
 	@Test
@@ -227,20 +215,4 @@ public class SceneDataTest {
 		scenedata.setPositionY(Yoffset);
 		assertEquals(Yoffset, scenedata.getPositionY());
 	}
-
-	@Test
-	public final void testGetFrameWidth() {
-		assertEquals(scenedata.getFrameWidth(), frm.getWidth());
-	}
-
-	@Test
-	public final void testGetJFrame() {
-		assertEquals(scenedata.getJFrame(), frm);
-	}
-
-	@Test
-	public final void testGetFrameHeight() {
-		assertEquals(scenedata.getFrameHeight(), frm.getHeight());
-	}
-
 }

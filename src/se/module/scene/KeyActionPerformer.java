@@ -29,7 +29,7 @@ public class KeyActionPerformer {
 		else if(KeyListener.right){
 			if(player.getPositionX()<scenedata.getMapWidth()-100)
 				player.setPositionX(player.getPositionX()+25);
-			if(scenedata.getPositionX()<scenedata.getMapWidth()-scenedata.getFrameWidth()){
+			if(scenedata.getPositionX()<scenedata.getMapWidth()-scenedata.getPanelWidth()){
 				if(scenedata.getRightBound()<(player.getPositionX()+100)){
 					scenedata.setPositionX(scenedata.getPositionX()+25);
 					if(scenedata.getRightBound()<scenedata.getMapWidth()-100){
@@ -55,7 +55,7 @@ public class KeyActionPerformer {
 		else if(KeyListener.down){
 			if(player.getPositionY()<scenedata.getMapHeight()-100)
 				player.setPositionY(player.getPositionY()+25);
-			if(scenedata.getPositionY()<scenedata.getMapHeight()-scenedata.getFrameHeight()){
+			if(scenedata.getPositionY()<scenedata.getMapHeight()-scenedata.getPanelHeight()){
 				if(scenedata.getBottomBound()<(player.getPositionY()+100)){
 					scenedata.setPositionY(scenedata.getPositionY()+25);
 					if(scenedata.getBottomBound()<scenedata.getMapHeight()-100){
