@@ -27,13 +27,13 @@ public class BackGround{
 		frm.setVisible(true);
 		SceneData scenedata = new SceneData(frm);
 		ScenePanel scenepanel = new ScenePanel();
+		cp.add(scenepanel);
 		scenepanel.setSceneData(scenedata);
-		frm.addKeyListener(new CharacterMoveListener(scenedata));
 		scenepanel.setBounds(0, 0, frm.getWidth(), frm.getHeight());
 		cp.setLayout(null);
-		cp.add(scenepanel);
+		
 		RePaintPanelActionListener repaint = new RePaintPanelActionListener(scenepanel);
-		Timer timer = new Timer(25, repaint);
+		Timer timer = new Timer(100, repaint);
 		timer.start();
 		
 	}

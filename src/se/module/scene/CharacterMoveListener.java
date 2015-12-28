@@ -6,87 +6,31 @@ import java.awt.event.WindowEvent;
 
 public class CharacterMoveListener extends KeyAdapter {
 	private SceneData scenedata;
-	private Player player;
+	public boolean right=false, left=false, up=false, down=false, space=false;
 	
 	public CharacterMoveListener(SceneData scenedata){
 		super();
 		this.scenedata = scenedata;
-		player = scenedata.getPlayer();
 	}
 	
+	@Override
 	public void keyPressed(KeyEvent e) {
-		moveCharacter(e);
-		moveMap(e);
-	}
-	
-	private void moveCharacter(KeyEvent e) {
+		super.keyPressed(e);
 		switch(e.getKeyCode()){
-		case(37):
-			if(player.getPositionX()>0)
-				player.setPositionX(player.getPositionX()-25);
+		case(KeyEvent.VK_RIGHT):
+			right = true;
 			break;
-		case(39):
-			if(player.getPositionX()<scenedata.getMapWidth()-100)
-				player.setPositionX(player.getPositionX()+25);
+		case(KeyEvent.VK_LEFT):
+			left = true;
 			break;
-		case(38):
-			if(player.getPositionY()>0)
-				player.setPositionY(player.getPositionY()-25);
+		case(KeyEvent.VK_UP):
+			up = true;
 			break;
-		case(40):
-			if(player.getPositionY()<scenedata.getMapHeight()-100)
-				player.setPositionY(player.getPositionY()+25);
+		case(KeyEvent.VK_DOWN):
+			down = true;
 			break;
-		default:
-			break;
-		}
-	}
-	
-	private void moveMap(KeyEvent e){
-		switch(e.getKeyCode()){
-		case(37):
-			if(scenedata.getPositionX()>0){
-				if(scenedata.getLeftBound()>player.getPositionX()){
-					scenedata.setPositionX(scenedata.getPositionX()-25);
-					if(scenedata.getLeftBound()>100){
-						scenedata.setLeftBound(scenedata.getLeftBound()-25);
-						scenedata.setRightBound(scenedata.getRightBound()-25);
-					}
-				}
-			}
-			break;
-		case(39):
-			if(scenedata.getPositionX()<scenedata.getMapWidth()-scenedata.getFrameWidth()){
-				if(scenedata.getRightBound()<(player.getPositionX()+100)){
-					scenedata.setPositionX(scenedata.getPositionX()+25);
-					if(scenedata.getRightBound()<scenedata.getMapWidth()-100){
-						scenedata.setRightBound(scenedata.getRightBound()+25);
-						scenedata.setLeftBound(scenedata.getLeftBound()+25);;
-					}
-				}
-			}
-			break;
-		case(38):
-			if(scenedata.getPositionY()>0){
-				if(scenedata.getTopBound()>player.getPositionY()){
-					scenedata.setPositionY(scenedata.getPositionY()-25);
-					if(scenedata.getTopBound()>100){
-						scenedata.setTopBound(scenedata.getTopBound()-25);
-						scenedata.setBottomBound(scenedata.getBottomBound()-25);
-					}
-				}
-			}
-			break;
-		case(40):
-			if(scenedata.getPositionY()<scenedata.getMapHeight()-scenedata.getFrameHeight()){
-				if(scenedata.getBottomBound()<(player.getPositionY()+100)){
-					scenedata.setPositionY(scenedata.getPositionY()+25);
-					if(scenedata.getBottomBound()<scenedata.getMapHeight()-100){
-						scenedata.setBottomBound(scenedata.getBottomBound()+25);
-						scenedata.setTopBound(scenedata.getTopBound()+25);;
-					}
-				}
-			}
+		case(KeyEvent.VK_SPACE):
+			space = true;
 			break;
 		case(49):
 		case(50):
@@ -100,7 +44,35 @@ public class CharacterMoveListener extends KeyAdapter {
 		default:
 			break;
 		}
-		//System.out.println(e.getKeyCode()+"X:"+positionx+"Y:"+positiony);
 	}
 	
+	/*
+	public void keyPressed(KeyEvent e) {
+		moveCharacter(e);
+		moveMap(e);
+	}
+	*/
+	@Override
+	public void keyReleased(KeyEvent e) {
+		super.keyReleased(e);
+		switch(e.getKeyCode()){
+		case(KeyEvent.VK_RIGHT):
+			right = false;
+			break;
+		case(KeyEvent.VK_LEFT):
+			left = false;
+			break;
+		case(KeyEvent.VK_UP):
+			up = false;
+			break;
+		case(KeyEvent.VK_DOWN):
+			down = false;
+			break;
+		case(KeyEvent.VK_SPACE):
+			space = false;
+			break;
+		default:
+			break;
+		}
+	}
 }
