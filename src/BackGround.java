@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import se.module.scene.CharacterMoveListener;
+import se.module.scene.KeyActionListener;
+import se.module.scene.KeyActionPerformer;
 import se.module.scene.RePaintPanelActionListener;
 import se.module.scene.SceneData;
 import se.module.scene.ScenePanel;
@@ -31,10 +33,17 @@ public class BackGround{
 		scenepanel.setSceneData(scenedata);
 		scenepanel.setBounds(0, 0, frm.getWidth(), frm.getHeight());
 		cp.setLayout(null);
+		CharacterMoveListener keyListener = new CharacterMoveListener(scenedata);
+		frm.addKeyListener(keyListener);
 		
 		RePaintPanelActionListener repaint = new RePaintPanelActionListener(scenepanel);
-		Timer timer = new Timer(100, repaint);
+		Timer timer = new Timer(20, repaint);
 		timer.start();
+		
+		KeyActionPerformer performer = new KeyActionPerformer(scenedata, keyListener);
+		KeyActionListener keyActionListener = new KeyActionListener(performer);
+		Timer keyTimer = new Timer(50, keyActionListener);
+		keyTimer.start();
 		
 	}
 }

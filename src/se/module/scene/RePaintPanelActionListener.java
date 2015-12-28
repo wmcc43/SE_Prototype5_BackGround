@@ -11,6 +11,5 @@ public class RePaintPanelActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		bg.repaint();
-		bg.moveCharacter();
 	}
 }
