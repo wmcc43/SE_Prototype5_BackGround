@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SceneCanvasTest {
-	SceneCanvas scenecanvas;
+	ScenePanel scenecanvas;
 	SceneDataStub scenedata;
 	
 	/*scenedata stub, viewport testing*/
@@ -15,7 +15,7 @@ public class SceneCanvasTest {
 	@Before
 	public void setUp() throws Exception {
 		scenedata = new SceneDataStub();
-		scenecanvas = new SceneCanvas();
+		scenecanvas = new ScenePanel();
 		scenecanvas.setSceneData(scenedata);
 	}
 
