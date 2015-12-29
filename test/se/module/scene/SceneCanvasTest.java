@@ -52,23 +52,23 @@ public class SceneCanvasTest {
 		assertEquals(700, scenedata.getPositionY());
 		assertEquals(1300, scenedata.getPositionY()+scenedata.getPanelHeight());
 		
-		scenedata.setVirtualCharacterPosition(new Point(4900, 1900));
-		assertEquals(4200, scenedata.getPositionX());
-		assertEquals(5000, scenedata.getPositionX()+scenedata.getPanelWidth());
-		assertEquals(1400, scenedata.getPositionY());
-		assertEquals(2000, scenedata.getPositionY()+scenedata.getPanelHeight());
+		scenedata.setVirtualCharacterPosition(new Point(5000, 2000));
+		assertEquals(4300, scenedata.getPositionX());
+		assertEquals(5100, scenedata.getPositionX()+scenedata.getPanelWidth());
+		assertEquals(1500, scenedata.getPositionY());
+		assertEquals(2100, scenedata.getPositionY()+scenedata.getPanelHeight());
 		
-		scenedata.setVirtualCharacterPosition(new Point(4900, 0));
-		assertEquals(4200, scenedata.getPositionX());
-		assertEquals(5000, scenedata.getPositionX()+scenedata.getPanelWidth());
+		scenedata.setVirtualCharacterPosition(new Point(5000, 0));
+		assertEquals(4300, scenedata.getPositionX());
+		assertEquals(5100, scenedata.getPositionX()+scenedata.getPanelWidth());
 		assertEquals(0, scenedata.getPositionY());
 		assertEquals(600, scenedata.getPositionY()+scenedata.getPanelHeight());
 		
-		scenedata.setVirtualCharacterPosition(new Point(0, 1900));
+		scenedata.setVirtualCharacterPosition(new Point(0, 2000));
 		assertEquals(0, scenedata.getPositionX());
 		assertEquals(800, scenedata.getPositionX()+scenedata.getPanelWidth());
-		assertEquals(1400, scenedata.getPositionY());
-		assertEquals(2000, scenedata.getPositionY()+scenedata.getPanelHeight());
+		assertEquals(1500, scenedata.getPositionY());
+		assertEquals(2100, scenedata.getPositionY()+scenedata.getPanelHeight());
 		
 		scenedata.setVirtualCharacterPosition(new Point(0, 0));
 		assertEquals(0, scenedata.getPositionX());

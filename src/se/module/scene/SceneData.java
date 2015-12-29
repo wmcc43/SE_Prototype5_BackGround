@@ -12,8 +12,8 @@ import javax.imageio.ImageIO;
 public class SceneData {
 	private int mapBit[][];
 	private int mapType=3;
-	private int mapWidth = 5000;
-	private int mapHeight = 2000;
+	private int mapWidth = 5100;
+	private int mapHeight = 2100;
 	private Image backimg[];
 	private Image character;
 	private Player player;
@@ -27,7 +27,7 @@ public class SceneData {
 	private String mapFilePath[] = {"./mapFileIce","./mapFileCake","./mapFileDesert","./mapFileLego"};
 	
 	public SceneData(ScenePanel panel){
-		mapBit = new int[50][20];
+		mapBit = new int[51][21];
 		backimg = new Image[5];
 		player = new Player();
 		player.setPosition(new Point(500,300));
@@ -38,7 +38,7 @@ public class SceneData {
 	}
 	
 	public SceneData(int mapType, ScenePanel panel){
-		mapBit = new int[50][20];
+		mapBit = new int[51][21];
 		backimg = new Image[5];
 		player = new Player();
 		player.setPosition(new Point(0,0));
@@ -75,12 +75,12 @@ public class SceneData {
 		try {
 			input = new FileReader(mapFilePath);
 			reader = new BufferedReader(input);
-			for(int j=0;j<20;j++){
+			for(int j=0;j<21;j++){
 				temp = reader.readLine();
 				if(temp==null)
 					break;
 				else{
-					for(int i=0;i<50;i++){
+					for(int i=0;i<51;i++){
 						mapBit[i][j] = Character.getNumericValue(temp.charAt(i));
 					}
 				}
@@ -90,19 +90,19 @@ public class SceneData {
 			e.printStackTrace();
 			setBasicMap();
 		} catch (IOException e) {
-			System.out.println("please check mapFile is correct structure, it should be (50-column*20-raw) Strings with number0~4. Would set to basic map");
+			System.out.println("please check mapFile is correct structure, it should be (51-column*21-raw) Strings with number0~4. Would set to basic map");
 			e.printStackTrace();
 			setBasicMap();
 		} catch(IndexOutOfBoundsException e) {
-			System.out.println("please check mapFile is correct structure, it should be (50-column*20-raw) Strings with number0~4. Would set to basic map");
+			System.out.println("please check mapFile is correct structure, it should be (51-column*21-raw) Strings with number0~4. Would set to basic map");
 			e.printStackTrace();
 			setBasicMap();
 		}
 	}
 	
 	private void setBasicMap(){
-		for(int i=0;i<50;i++)
-			for(int j=0;j<20;j++){
+		for(int i=0;i<51;i++)
+			for(int j=0;j<21;j++){
 				if(i%2==1 && j%2==1)
 					mapBit[i][j]=4;
 				else

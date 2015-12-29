@@ -3,8 +3,8 @@ package se.module.scene;
 
 public class SceneDataStub extends SceneData {
 	
-	private int mapWidth = 5000;
-	private int mapHeight = 2000;
+	private int mapWidth = 5100;
+	private int mapHeight = 2100;
 	private Player player;
 	private int positionx = 0;//offsetX
 	private int positiony = 0;//offsetY
